@@ -196,7 +196,7 @@ while seguir_jugando == "s":
                 print("\nJugador 2, tu turno.")
             tirar_ficha_multijugador(huecos)
             huecos -=1
-            if huecos <= 4: # Esto es para que no compruebe ganador hasta que haya como mínimo 5 fichas en el tablero
+            if huecos <= 5: # Esto es para que no compruebe ganador hasta que haya como mínimo 5 fichas en el tablero
                 comprobar_ganador_multijugador(tablero)
                 if comprobar_ganador_multijugador(tablero):
                     print_tablero(tablero)
