@@ -36,46 +36,32 @@ FROM titleauthor;
 -- CHALLENGE 3 - Best Selling Authors
 
 -- Los 3 autores con más numero de títulos vendidos
-SELECT authors.au_id as "AUTHOR ID", authors.au_lname as "LAST NAME", authors.au_fname as "FIRST NAME", COUNT(titles.title) as "TOTAL"
+-- He asumido que titles.ytd_sales es el número de ventas por título
+SELECT authors.au_id as "AUTHOR ID", authors.au_lname as "LAST NAME", authors.au_fname as "FIRST NAME", SUM(titles.ytd_sales) as "TOTAL"
 FROM authors
 INNER JOIN titleauthor ON authors.au_id = titleauthor.au_id
 INNER JOIN titles ON titles.title_id = titleauthor.title_id
 GROUP BY authors.au_id
-ORDER BY COUNT(titles.title) DESC
+ORDER BY SUM(titles.ytd_sales) DESC
 LIMIT 3;
 
 -- =================
 -- CHALLENGE 4 - Best Selling Authors Ranking
 
--- Todos los autores ordenados de mayor a menos en función del número tota de títulos vendidos, incluidos los que no han vendido ninguno.
-SELECT authors.au_id as "AUTHOR ID", authors.au_lname as "LAST NAME", authors.au_fname as "FIRST NAME", COUNT(titles.title) as "TOTAL"
+-- Todos los autores ordenados de mayor a menor en función del número total de títulos vendidos, incluidos los que no han vendido ninguno.
+-- Utilizo la función COALESCE para mostrar 0 en lugar de null en TOTAL.
+SELECT authors.au_id as "AUTHOR ID", authors.au_lname as "LAST NAME", authors.au_fname as "FIRST NAME", COALESCE(SUM(titles.ytd_sales),0) as "TOTAL"
 FROM authors
 LEFT JOIN titleauthor ON authors.au_id = titleauthor.au_id
 LEFT JOIN titles ON titles.title_id = titleauthor.title_id
+LEFT JOIN sales ON sales.title_id = titles.title_id
 GROUP BY authors.au_id
-ORDER BY COUNT(titles.title) DESC;
+ORDER BY SUM(titles.ytd_sales) DESC;
 
 -- =================
 -- BONUS CHALLENGE - Most Profiting Authors
-
--- NO ES LA SOLUCIÓN FINAL: He empezado haciendo esta query sin tener en cuenta el royaltyper.
--- Sin hacer el royaltyper, Anne Ringer parece que es el que más profit tiene, pero no será así.
-SELECT authors.au_id as "AUTHOR ID", authors.au_lname as "LAST NAME", authors.au_fname as "FIRST NAME", SUM(titles.advance + titles.royalty) as "PROFIT"
-FROM authors
-INNER JOIN titleauthor ON authors.au_id = titleauthor.au_id
-INNER JOIN titles ON titles.title_id = titleauthor.title_id
-GROUP BY authors.au_id
-ORDER BY SUM(titles.advance + titles.royalty) DESC;
-
--- Esta query la he hecho para ver qué valores hay en royaltyper.
--- Además, puedo ver que, aunque Anne Ringer es la que más títulos ha vendido (como veíamos antes), tiene un royaltyper bajo.
-SELECT titleauthor.au_id, authors.au_lname as "LAST NAME", authors.au_fname as "FIRST NAME", titleauthor.title_id, titleauthor.royaltyper
-FROM titleauthor
-INNER JOIN authors ON authors.au_id = titleauthor.au_id
-ORDER BY title_id, au_id;
-
--- SOLUCIÓN: Es por esto que cuando metemos el royaltyper, Anne Ringer ya no sale como la que más profit tiene, sino que es la octava.
-SELECT authors.au_id as "AUTHOR ID", authors.au_lname as "LAST NAME", authors.au_fname as "FIRST NAME", SUM((titles.advance + titles.royalty)*(titleauthor.royaltyper/100)) as "PROFIT"
+-- En PROFIT hago la suma del advance + (los royalties multiplicados por la ventas del título), y todo esto lo multiplico por el royaltyper para tener en cuenta el porcentaje que se lleva.
+SELECT authors.au_id as "AUTHOR ID", authors.au_lname as "LAST NAME", authors.au_fname as "FIRST NAME", SUM((titles.advance + (titles.royalty * titles.ytd_sales))*(titleauthor.royaltyper/100)) as "PROFIT"
 FROM authors
 INNER JOIN titleauthor ON authors.au_id = titleauthor.au_id
 INNER JOIN titles ON titles.title_id = titleauthor.title_id
