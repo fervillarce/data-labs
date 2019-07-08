@@ -37,7 +37,7 @@ Se importa el json como un dataframe, para trabajar con él en la siguiente fase
 
 Primero se añade una nueva columna al dataframe ('Translation'), en la que se hace la traducción de todas las canciones. El motivo de la traducción es que la mayoría de las canciones de reggaeton son en español, y la librería que se usará para el análisis de sentimiento funciona con inglés. Aunque lo deseable es que el análisis se hiciera en español, me ha gustado la idea de practicar con traducciones. Sin embargo, la librería con la que se han hecho las traducciones (textblob) tira de la API de Google Translate, por lo que tras haber hecho unas cuantas pruebas, ya no me obtiene datos por haber superado el límite de requests. Al parecer, no se renueva cada día, por lo que ya no puedo hacer uso de esta funcionalidad (al menos desde las IPs que uso habitualmente). Por tanto, esta columna se devuelve vacía (juro que antes se volcaba la traducción perfectamente, por lo que el código era correcto, palabrita del niño Jesús).
 
-A continuación, se añade otra nueva columna al dataframe ('Sentiment'), en la que se hace el análisis de sentimiento de la columma de las canciones en inglés. Como comentaba, esa columna ahora se devuelve vacía, pero antes de que me lo caparan, se devolvían los valores de polaridad por verso correctamente. Aprecié que mucchos versos tenían polaridad positiva cuando aparecían palabras como happiness, e incluso con frases como "I'm great for you".
+A continuación, se añade otra nueva columna al dataframe ('Sentiment'), en la que se hace el análisis de sentimiento de la columma de las canciones en inglés. Como comentaba, esa columna ahora se devuelve vacía, pero antes de que me lo caparan, se devolvían los valores de polaridad por verso correctamente. Aprecié que muchos versos tenían polaridad positiva cuando aparecían palabras como happiness, e incluso con frases como "I'm great for you".
 
 Luego, se añade otra columna ('Sent_mean'), en la que se calcula la media de la polaridad (resultado del análisis de sentimiento) de todos los versos, por canción. El objetivo es identificar qué canciones tienen un valor total positivo o negativo.
 
@@ -58,6 +58,7 @@ Por último, exporta el dataframe en un archivo csv.
 ### main
 
 La función main es la que lleva la batuta.
+Por destacar algo de esta función, empieza varias líneas para comprobar si el json existe. Si existe, lo usa directamente, ignorando la función de scrape, y si no existe, hace el scraping.
 
 
 
@@ -77,6 +78,29 @@ Output files:
 * Reggaeton_lyrics.json: archivo json que contiene solo la información de "Artist", "Title" y "Lyrics", obtenidas del scraping. Este archivo es el que se importa en la funcion extract del pipeline. Es necesario hacerlo con un json, porque si lo hiciéramos con un csv, la columna de Lyrics sería una lista de una string (la canción), en lugar de ser una lista de strings (versos).
 * wordcloud.png: imagen de nube de palabras generada en la función analyze del pipeline.
 * stemmed_wordcloud.png: imagen de nube de lexemas (stemming) generada en la función analyze del pipeline.
+
+
+
+## Conclusiones
+
+
+### Resultados
+
+Dados los problemas con la función translate de textblob, no he podido sacar conclusiones finales contundentes. Antes de que me lo caparan, se devolvían los valores de polaridad por verso correctamente. Aprecié que muchos versos tenían polaridad positiva cuando aparecían palabras como happiness, e incluso con frases como "I'm great for you".
+
+Por otro lado, las nubes de palabras son las siguientes (normal y con stemming):
+
+![Alt text](wordcloud.png?raw=true "Wordcloud de letras reggaeton")
+
+![Alt text](stemmed_wordcloud.png?raw=true "Wordcloud de letras reggaeton")
+
+
+### Problemas encontrados
+
+Aunque lo he ido comentando a lo largo del readme, hago un resumen:
+* El límite de peticiones de la función translate de la librería textblob, ya que tira de la API de Google Translate.
+* Al inicio del proyecto, me llegó a hacer el scraping de todas las canciones (unas 2.500, guardé el archivo). Sin embargo, ahora siempre se me para el kernel, y desconozco el motivo.
+* Me imprime las nubes de palabras, pudiéndolas visualizar por pantalla (imágenes del apartado anterior), y se generan las dos imágenes en png. Sin embargo, cuando abro los archivos png, están en blanco.
 
 
 
