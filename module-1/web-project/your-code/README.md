@@ -90,9 +90,9 @@ Dados los problemas con la función translate de textblob, no he podido sacar co
 
 Por otro lado, las nubes de palabras son las siguientes (normal y con stemming):
 
-![wordcloud]("wordcloud.png")
+![wordcloud](wordcloud.png)
 
-![stemmed_wordcloud](module-1/web-project/your-code/stemmed_wordcloud.png?raw=true "Wordcloud de letras reggaeton")
+![stemmed_wordcloud](stemmed_wordcloud.png)
 
 
 ### Problemas encontrados
