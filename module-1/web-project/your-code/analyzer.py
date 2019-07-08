@@ -2,7 +2,7 @@ from wordcloud import WordCloud
 import matplotlib.pyplot as plt
 
 # Nube de palabras
-def print_wordcloud(list_of_words):
+def print_wordcloud(list_of_words, file_name):
     """
     Receive a list of words and print a wordcloud.
     """
@@ -14,6 +14,7 @@ def print_wordcloud(list_of_words):
     # Display the generated image:
     plt.imshow(wordcloud, interpolation='bilinear')
     plt.axis("off")
+    plt.savefig(file_name)
     return plt.show()
 
 
