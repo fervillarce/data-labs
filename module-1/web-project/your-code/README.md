@@ -90,9 +90,9 @@ Dados los problemas con la función translate de textblob, no he podido sacar co
 
 Por otro lado, las nubes de palabras son las siguientes (normal y con stemming):
 
-![wordcloud](module-1/web-project/your-code/wordcloud.png?raw=true "Wordcloud de letras reggaeton")
+![wordcloud](https://github.com/fervillarce/data-labs/blob/2805bd18a760cf261dabc0488bf6e3e4061a1964/module-1/web-project/your-code/wordcloud.png?raw=true "Wordcloud de letras reggaeton")
 
-![stemmed_wordcloud](module-1/web-project/your-code/stemmed_wordcloud.png?raw=true "Wordcloud de letras reggaeton")
+![stemmed_wordcloud](https://github.com/fervillarce/data-labs/blob/2805bd18a760cf261dabc0488bf6e3e4061a1964/module-1/web-project/your-code/stemmed_wordcloud.png?raw=true "Wordcloud de letras reggaeton")
 
 
 ### Problemas encontrados
@@ -100,7 +100,6 @@ Por otro lado, las nubes de palabras son las siguientes (normal y con stemming):
 Aunque lo he ido comentando a lo largo del readme, hago un resumen:
 * El límite de peticiones de la función translate de la librería textblob, ya que tira de la API de Google Translate.
 * Al inicio del proyecto, me llegó a hacer el scraping de todas las canciones (unas 2.500, guardé el archivo). Sin embargo, ahora siempre se me para el kernel, y desconozco el motivo.
-* Me imprime las nubes de palabras, pudiéndolas visualizar por pantalla (imágenes del apartado anterior), y se generan las dos imágenes en png. Sin embargo, cuando abro los archivos png, están en blanco.
 
 
 
