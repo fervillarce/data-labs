@@ -1,1 +1,5 @@
-https://public.tableau.com/profile/fernando8285#!/
+Challenge 1:
+https://public.tableau.com/profile/fernando8285#!/vizhome/lab-tableau-data-visualization_15691739766550/Dashboard1
+
+Bonus challenge:
+https://public.tableau.com/profile/fernando8285#!/vizhome/lab-tableau-data-visualization-bonus-challenge/Dashboard1
