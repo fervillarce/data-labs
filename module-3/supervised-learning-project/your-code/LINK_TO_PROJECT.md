@@ -1,1 +1,1 @@
-https://github.com/fervillarce/cars-machine-learning-project
+https://github.com/fervillarce/machine-learning-project-cars
